@@ -55,7 +55,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: node-app
-        path: .
+        path: release.zip
 
   deploy:
     permissions:
@@ -71,9 +71,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: node-app
+    - name: List contents of the current directory
+      run: ls -la
 
     - name: unzip artifact for deployment
-      run: unzip release.zip
+      run: unzip release.zip && rm release.zip
 
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
