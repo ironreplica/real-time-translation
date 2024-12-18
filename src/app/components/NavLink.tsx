@@ -8,7 +8,7 @@ interface LinkProps {
 
 const NavLink: React.FC<LinkProps> = ({ title, link }) => {
   return (
-    <div className=" font-semibold text-xl my-auto px-4">
+    <div className=" font-semibold text-xl my-auto px-4 hover:text-violet-400 transition-all duration-200">
       <Link href={link}>
         <h1>{title}</h1>
       </Link>
