@@ -18,7 +18,7 @@ const rightLinks: LinkTypes[] = [
 
 const Footer = () => {
   return (
-    <div className=" w-full h-[80px] bg-zinc-950 flex flex-row border-b-[2px] border-gray-900">
+    <div className=" w-full h-[80px] bg-gray-950 flex flex-row border-b-[2px] border-gray-900">
       <div className=" grid grid-cols-2 w-full mx-[300px]">
         <div className="flex flex-row">
           {leftLinks.map((element, index) => (
