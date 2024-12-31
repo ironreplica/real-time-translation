@@ -1,8 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavLink from "./NavLink";
+// import { account } from "@/app/appwrite";
 import Link from "next/link";
-import { useAuth } from "@/middleware/hooks/use-auth";
+
+// import { useUserSession } from "@/utils/use-user-session";
+
+import { Models } from "appwrite";
 
 interface LinkTypes {
   title: string;
@@ -16,27 +20,52 @@ const leftLinks: LinkTypes[] = [
   { title: "Pricing", link: "#" },
 ];
 const rightLinks: LinkTypes[] = [
-  { title: "Sign In", link: "#" },
+  { title: "Sign In", link: "/login" },
   { title: "Create Account", link: "/create-account" },
 ];
 const rightLinksLoggedIn: LinkTypes[] = [
   { title: "username", link: "#" },
-  { title: "Logout", link: "/create-account" },
+  { title: "Logout", link: "/api/auth/logout" },
 ];
 const NavBar = () => {
-  const user = useAuth();
-  if (user !== null) {
-    console.log(user.name);
-  }
+  const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/api/auth/session", {
+          credentials: "include", // Ensure cookies are sent with the request
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error(error);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
+
   return (
-    <div className=" w-full h-[80px] bg-gray-950 flex flex-row border-b-[2px] border-gray-900">
-      <div className=" grid grid-cols-2 w-full mx-[300px]">
-        <div className="flex flex-row ">
+    <div className="w-full h-[80px] bg-gray-950 flex flex-row border-b-[2px] border-gray-900">
+      <div className="grid grid-cols-2 w-full mx-[300px]">
+        <div className="flex flex-row">
           {leftLinks.map((element, index) =>
             index === 0 ? (
               <div
                 key={index}
-                className=" font-bold text-2xl my-auto px-4 hover:text-violet-400 transition-all duration-200"
+                className="font-bold text-2xl my-auto px-4 hover:text-violet-400 transition-all duration-200"
               >
                 <Link href={element.link}>
                   <h1>{element.title}</h1>
@@ -47,13 +76,14 @@ const NavBar = () => {
             )
           )}
         </div>
-        <div className=" flex flex-row-reverse ">
+        <div className="flex flex-row-reverse">
           {user
             ? rightLinksLoggedIn.map((element, index) => (
-                // ! Mising session. create a new session
                 <NavLink
                   key={index}
-                  title={element.title === "username" ? user.name : "ERRROR"}
+                  title={
+                    element.title === "username" ? user.name : element.title
+                  }
                   link={element.link}
                 />
               ))
