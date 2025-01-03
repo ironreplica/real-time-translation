@@ -1,18 +1,20 @@
 import Footer from "./components/Footer";
 import HeroSection from "./components/HeroSection";
 import NavBar from "./components/NavBar";
-import { Client } from "appwrite";
-import { account } from "@/app/appwrite";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import firebase_app from "./config";
 
 export default async function Home() {
-  const client = new Client();
+  const auth = getAuth(firebase_app);
 
-  client.setProject("676332e900095032dfac");
-  try {
-    console.log("ACC: " + (await account.get()));
-  } catch (error) {
-    console.log(error);
-  }
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("User:", user);
+    } else {
+      console.log("No user is signed in.");
+    }
+  });
+
   return (
     <div className="items-center justify-items-center min-h-screen font-[family-name:var(--font-geist-sans)] ">
       <NavBar />

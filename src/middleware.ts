@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { Account, Client } from "appwrite";
+// import { Account, Client } from "appwrite";
+
+// TODO: Get middleware working, session checking needs to be functioning as well.
+// This is currently setup for appwrite.
 
 export async function middleware(request: NextRequest) {
   console.log("hitting MIDDLEWARE"); // Ensure this log is visible in your server logs

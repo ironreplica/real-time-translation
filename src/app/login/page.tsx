@@ -1,18 +1,19 @@
 "use client";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
-import { GetAiApi } from "../../middleware/get-api-ai";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
+import firebase_app from "../config";
 
 interface FormData {
-  username: string;
   email: string;
   password: string;
 }
 
 export default function Home() {
+  const auth = getAuth(firebase_app);
+
   const [formData, setFormData] = useState<FormData>({
-    username: "",
     email: "",
     password: "",
   });
@@ -24,19 +25,20 @@ export default function Home() {
     try {
       setIsSubmitting(true);
       console.log(formData);
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      console.log(data);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
+      console.log("User signed in:", user);
     } catch (error) {
-      console.error(error);
+      console.error("Error signing in:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
   const updateField = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -44,13 +46,11 @@ export default function Home() {
     });
   };
 
-  GetAiApi();
   return (
     <div className="items-center justify-items-center min-h-screen font-[family-name:var(--font-geist-sans)] ">
       <NavBar />
       <div className="w-full h-[800px] grid grid-cols-2">
         <div className=" bg-gray-900"></div>
-        {/* https://userpilot.com/blog/sign-up-page-examples/ */}
         <div className=" flex flex-col items-center my-auto">
           <h1 className=" font-bold text-2xl">Login</h1>
           <form

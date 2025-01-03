@@ -29,7 +29,9 @@
     ".next/types/**/*.ts",
     "src/utils/get-user-session.js",
     "src/app/api/auth/session.js",
-    "src/app/api/auth/session/route.js"
+    "src/app/api/auth/session/route.js",
+    "src/utils/use-user.js",
+    "src/app/api/firebase/context/authContext.js"
   ],
   "exclude": ["node_modules"]
 }

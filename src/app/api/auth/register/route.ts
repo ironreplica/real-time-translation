@@ -1,21 +1,26 @@
-import { account } from "@/app/appwrite";
 import { NextResponse } from "next/server";
-import { AppwriteException, ID } from "appwrite";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
+import firebase_app from "@/app/config";
 
-// Create an account
 export async function POST(request: Request) {
+  const auth = getAuth(firebase_app);
   try {
     const { email, password, name } = await request.json();
-    // Create the account
-    const user = await account.create(ID.unique(), email, password, name);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    await updateProfile(user, { displayName: name });
     console.log("User created:", user); // Add logging
 
-    // Create a session (log in the user)
-    const session = await account.createEmailPasswordSession(email, password);
-    console.log("Session created:", session); // Add logging
-
-    const response = NextResponse.json({ user, session });
-    response.cookies.set("appwrite_session", session.$id, {
+    const response = NextResponse.json({ user });
+    response.cookies.set("firebase_session", user.uid, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
@@ -23,16 +28,15 @@ export async function POST(request: Request) {
     });
     console.log(
       "Session cookie set:",
-      response.cookies.get("appwrite_session")
+      response.cookies.get("firebase_session")
     ); // Add logging
 
     return response;
   } catch (error) {
-    const appwriteError = error as AppwriteException;
-    console.error("Error during registration:", appwriteError); // Add logging
+    console.error("Error during registration:", error); // Add logging
     return NextResponse.json(
-      { error: appwriteError.message },
-      { status: appwriteError.code || 400 }
+      { error: (error as Error).message },
+      { status: 400 }
     );
   }
 }
