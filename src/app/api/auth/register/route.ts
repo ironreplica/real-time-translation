@@ -5,6 +5,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import firebase_app from "@/app/config";
+import mapUserData from "../../firebase/userdata/mapUserData";
+import { setUserCookie } from "../../firebase/userdata/userCookies";
 
 export async function POST(request: Request) {
   const auth = getAuth(firebase_app);
@@ -16,20 +18,26 @@ export async function POST(request: Request) {
       password
     );
     const user = userCredential.user;
+
     await updateProfile(user, { displayName: name });
+
+    const userData = async () => mapUserData(user);
+
+    setUserCookie(await userData());
+
     console.log("User created:", user); // Add logging
 
     const response = NextResponse.json({ user });
-    response.cookies.set("firebase_session", user.uid, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-    });
-    console.log(
-      "Session cookie set:",
-      response.cookies.get("firebase_session")
-    ); // Add logging
+    // response.cookies.set("firebase_session", user.uid, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   sameSite: "strict",
+    //   maxAge: 60 * 60 * 24 * 7, // 1 week
+    // });
+    // console.log(
+    //   "Session cookie set:",
+    //   response.cookies.get("firebase_session")
+    // ); // Add logging
 
     return response;
   } catch (error) {

@@ -1,9 +1,10 @@
 "use client";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import firebase_app from "../config";
+// import firebase_app from "../config";
+// import { setUserCookie } from "../api/firebase/userdata/userCookies";
 
 interface FormData {
   email: string;
@@ -11,7 +12,7 @@ interface FormData {
 }
 
 export default function Home() {
-  const auth = getAuth(firebase_app);
+  // const auth = getAuth(firebase_app);
 
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -24,14 +25,37 @@ export default function Home() {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      console.log(formData);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const user = userCredential.user;
-      console.log("User signed in:", user);
+      console.log("Attempting to hit route...");
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Login successful. Generating cookie...", data.user);
+        try {
+          await fetch("api/auth/cookie", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              idToken: data.user.idToken,
+              csrfToken: "your-csrf-token", // Replace with actual CSRF token
+            }),
+          });
+        } catch (error) {
+          console.error("Error setting cookie:", error);
+        }
+        // Save the token to cookies
+        // Handle successful login (e.g., redirect or update UI)
+      } else {
+        console.error("Login failed", data.error);
+        // Handle login failure (e.g., show error message)
+      }
     } catch (error) {
       console.error("Error signing in:", error);
     } finally {

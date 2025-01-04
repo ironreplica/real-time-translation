@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -27,7 +28,9 @@ const firebaseConfig = {
 const firebase_app =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 const database = getDatabase(firebase_app);
+const auth = getAuth(firebase_app);
 
 export default firebase_app;
 export const storage = getStorage(firebase_app);
 export { database };
+export { auth };

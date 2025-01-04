@@ -31,7 +31,15 @@
     "src/app/api/auth/session.js",
     "src/app/api/auth/session/route.js",
     "src/utils/use-user.js",
-    "src/app/api/firebase/context/authContext.js"
+    "src/app/api/firebase/context/authContext.js",
+    "src/app/components/NavBar.js",
+    "src/app/components/NavBar.jsx",
+    "src/app/api/firebase/userdata/userCookies.js",
+    "src/app/api/firebase/userdata/mapUserData.js",
+    "src/app/api/auth/login/route.js",
+    "src/app/components/HoverableMessage.jsx",
+    "src/app/api/private-session/create/route.js",
+    "src/app/session/[id]/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

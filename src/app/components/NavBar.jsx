@@ -1,62 +1,73 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import NavLink from "./NavLink";
-// import { account } from "@/app/appwrite";
 import Link from "next/link";
 
-// import { useUserSession } from "@/utils/use-user-session";
+import { useAuthContext } from "../api/firebase/context/authContext";
 
-import { Models } from "appwrite";
+// TODO: Convert to typescript
 
-interface LinkTypes {
-  title: string;
-  link: string;
-}
+// interface LinkTypes {
+//   title: string;
+//   link: string;
+// }
 
-const leftLinks: LinkTypes[] = [
+const leftLinks = [
   { title: "Language Bridge", link: "/" },
   { title: "Home", link: "#" },
   { title: "About", link: "#" },
   { title: "Pricing", link: "#" },
 ];
-const rightLinks: LinkTypes[] = [
+const rightLinks = [
   { title: "Sign In", link: "/login" },
   { title: "Create Account", link: "/create-account" },
 ];
-const rightLinksLoggedIn: LinkTypes[] = [
+const rightLinksLoggedIn = [
   { title: "username", link: "#" },
   { title: "Logout", link: "/api/auth/logout" },
 ];
+// interface User {
+//   name: string;
+//   // Add other properties as needed
+// }
+// interface AuthContextType {
+//   user: User | null;
+//   // Add other properties if your context provides more values
+// }
+
 const NavBar = () => {
-  const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
-    null
-  );
-  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuthContext();
+  // const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
+  //   null
+  // );
+  // const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch("/api/auth/session", {
-          credentials: "include", // Ensure cookies are sent with the request
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data.user);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error(error);
-        setUser(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUserData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch("/api/auth/session", {
+  //         credentials: "include", // Ensure cookies are sent with the request
+  //       });
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setUser(data.user);
+  //       } else {
+  //         setUser(null);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //       setUser(null);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   fetchUserData();
+  // }, []);
 
-  if (isLoading) return <div>Loading...</div>;
-
+  // if (isLoading) return <div>Loading...</div>;
+  // const { user } = useAuthContext();
+  // if (user) {
+  // }
   return (
     <div className="w-full h-[80px] bg-gray-950 flex flex-row border-b-[2px] border-gray-900">
       <div className="grid grid-cols-2 w-full mx-[300px]">

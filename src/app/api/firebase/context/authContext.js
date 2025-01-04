@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
-import Loading from "../app/components/Loading";
+import Loading from "@/app/components/Loading";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
-import firebase_app from "../firebase/config";
+// import { User as FirebaseUser } from "firebase/auth";
+import firebase_app from "@/app/config";
 
 const auth = getAuth(firebase_app);
 
@@ -15,7 +16,7 @@ export const LogOut = () => {
 };
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = (React.useState < FirebaseUser) | (null > null);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
