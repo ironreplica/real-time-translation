@@ -27,15 +27,15 @@ const SessionLeftWindow = () => {
       </div>
       <button
         onClick={async (e) => {
+          // * Create a new session button
           e.preventDefault();
-          console.log("Creating a new session...");
           const response = await fetch("/api/private-session/create", {
             method: "POST",
           });
           const data = await response.json();
           const sessionId = data.sessionId;
-          console.log("Session ID:", sessionId);
-          router.push(`session/${sessionId}`);
+          // Navigate to the new session room
+          router.push(`/session/room-${sessionId}`);
         }}
         className="mx-auto flex items-center justify-center mb-4 border border-gray-600 rounded-md p-2 hover:bg-slate-700 transition-all duration-200"
       >

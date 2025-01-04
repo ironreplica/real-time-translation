@@ -38,8 +38,9 @@
     "src/app/api/firebase/userdata/mapUserData.js",
     "src/app/api/auth/login/route.js",
     "src/app/components/HoverableMessage.jsx",
-    "src/app/api/private-session/create/route.js",
-    "src/app/session/[id]/page.jsx"
+    "src/app/api/private-session/create/route.ts",
+    "src/app/session/[id]/page.jsx",
+    "src/app/components/SessionLeftWindow.jsx"
   ],
   "exclude": ["node_modules"]
 }
