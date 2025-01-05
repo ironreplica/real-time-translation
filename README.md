@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Real Time Translation | Language Bridge
+
+## Real-Time Translation Chat
+
+### Existing Solutions
+While translation chat apps exist, most have limitations:
+- Google Translate Chat
+- Microsoft Translator
+- iTranslate
+- Papago
+
+### Unique Features
+Advanced Features to Distinguish:
+- AI-powered contextual translation
+- Dialect/regional language nuances
+- Cultural context interpretation
+- Machine learning adaptation to user communication style
+
+### Technical Implementation Strategy
+#### Core Technologies
+- WebSocket for real-time communication
+- MistrailAI for AI Technologies
+- Next.js for frontend/backend
+
+### Potential Unique Features
+- Conversation memory/learning
+- Account based private messaging
+- Professional vs casual language modes
+- Privacy-focused encrypted translations
+- Background cultural context notes
+- Pronunciation guides
+- Voice to text
+
+### Potential Monetization Models
+- Freemium translation credits
+- Professional/enterprise language services
+- Advanced language learning integrations
+- Per-minute translation charges
+
+### Competitive Differentiation
+✅ Focus on nuanced, context-aware translations
+✅ User-customizable translation experiences
+✅ Advanced linguistic machine learning
+
+Conclusion: Viable project with significant innovation potential!
 
 ## Getting Started
 
-First, run the development server:
+- Clone the repository
+- Aqquire a MistralAI API Key and place in a `.env` file. `MISTRAL_API_KEY="your_key"`
+- Run `npm install`
+- Run `npm run dev`
+- Open localhost 3000
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Prerequisites
+
+- NodeJS
+- NPM
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running
+
+Say what the step will be
+
+```
+Give the example
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+And repeat
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+until finished
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+End with an example of getting some data out of the system or using it for a little demo
 
-## Learn More
+### Console related tests
 
-To learn more about Next.js, take a look at the following resources:
+Be sure to check the console on the client as well as on the server for potential issues.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Built With
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* [NextJS](https://nextjs.org/) - The web framework used
+* [TailwindCSS](https://tailwindcss.com/) - Styling framepwork
+* [MistralAI](https://mistral.ai/) - AI API used for translation
+* [Socket.IO](https://socket.io/) - Library for web sockets
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Currently, the repository is closed for contributions.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Authors
+
+* **Trevor Childs** - *Creator* - [Personal Portfolio](https://trevor-childs.com/)
+
+## Acknowledgments
+
+* This project was a Capstone Assignment for Tooele Technical College 
