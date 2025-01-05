@@ -7,16 +7,17 @@ const InfoLeftWindow = () => {
         <h1>Info</h1>
       </div>
       <div className="my-3">
-        <p>
-          Reprehenderit fugiat ullamco est voluptate voluptate do magna veniam
-          consectetur est. Reprehenderit irure esse fugiat dolore eiusmod velit
-          adipisicing ex adipisicing non ad aliqua id consequat. Exercitation
-          occaecat id anim cillum minim dolore cillum commodo irure. Irure
-          adipisicing eiusmod consequat laboris laboris excepteur nulla
-          voluptate ullamco. Cupidatat nostrud nulla deserunt id eiusmod
-          cupidatat aute cupidatat laboris sint in. Incididunt non officia ex
-          sint id ipsum fugiat nisi sint veniam velit. Occaecat elit aliquip
-          elit ut duis.
+        <p className="p-4 font-sans">
+          Language Bridge is a proof of concept application that allows users to
+          seamlessly translate between different languages. The idea of this
+          project is to <strong>bridge the gap</strong> between different
+          languages and cultures.
+        </p>
+        <p className="p-4 font-sans">
+          Language Bridge was built using NextJS, TailwindCSS, Mistral.AI, and
+          Socket.IO. The current version of the application supports translation
+          between English, Spanish, French, and German. The application does not
+          support stored message history, or account creation at the moment.
         </p>
       </div>
     </div>

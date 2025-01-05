@@ -16,14 +16,13 @@ const leftButtonStyleSelected =
 export default function Page() {
   const params = useParams();
   const [messageInput, setMessageInput] = useState("");
+  const [myLanguage, setMyLanguage] = useState("english");
   const [messageThread, setMessageThread] = useState([]);
   const [id, setId] = useState(null);
   const [socket, setSocket] = useState(null);
   const [activeWindow, setActiveWindow] = useState("sessions");
   const [selfImgHue, setSelfImgHue] = useState(0);
   const [selfImgSat, setSelfImgSat] = useState(0);
-  const [ImgHue, setImgHue] = useState(0);
-  const [ImgSat, setImgSat] = useState(0);
 
   useEffect(() => {
     setId(params.id);
@@ -31,8 +30,6 @@ export default function Page() {
   useEffect(() => {
     setSelfImgHue(Math.floor(Math.random() * 360));
     setSelfImgSat(Math.floor(Math.random() * 100));
-    setImgHue(Math.floor(Math.random() * 360));
-    setImgSat(Math.floor(Math.random() * 100));
   }, []);
   useEffect(() => {
     if (id) {
@@ -51,13 +48,37 @@ export default function Page() {
         console.log("Socket disconnected");
       });
 
-      newSocket.on("message", (data) => {
+      newSocket.on("message", async (data) => {
         let newData = JSON.parse(data);
         if (newData.socketId !== newSocket.id) {
           newData.self = false;
-          console.log("Received message:", newData);
 
+          let translation;
+          // Call translate api, store original message and set translated to true
+          console.log(console.log(newData.messageLanguage, myLanguage));
+          if (newData.messageLanguage !== myLanguage) {
+            try {
+              const response = await fetch("/api/ai", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  userMessage: newData.message,
+                  language: myLanguage,
+                }),
+              });
+              const result = await response.json();
+              translation = result.response;
+            } catch (error) {
+              console.error("Error fetching AI API:", error);
+            }
+            newData.wasTranslated = true;
+            newData.originalMessage = newData.message;
+            newData.message = translation;
+          }
           // Using functional update to ensure you're using the latest state
+          console.log("Received message:", newData);
           setMessageThread((prevMessages) => [...prevMessages, newData]);
         }
       });
@@ -67,7 +88,7 @@ export default function Page() {
         console.log("Socket disconnected");
       };
     }
-  }, [id]);
+  }, [id, myLanguage]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -78,6 +99,9 @@ export default function Page() {
         roomId: id,
         socketId: socket.id,
         self: true,
+        messageLanguage: myLanguage,
+        hue: selfImgHue,
+        sat: selfImgSat,
       };
       console.log("sending: ", data);
       setMessageThread((prevMessages) => [...prevMessages, data]);
@@ -155,7 +179,16 @@ export default function Page() {
         <div className="bg-slate-950 w-4/5 flex flex-col">
           <div className="bg-slate-600 p-4 flex flex-row justify-between">
             <h1 className="text-xl">Language Bridge - General Public Chat</h1>
-            <h1 className="text-xl">{}</h1>
+            <select
+              className="bg-slate-700 text-white pr-4 rounded"
+              value={myLanguage}
+              onChange={(e) => setMyLanguage(e.target.value)}
+            >
+              <option value="english">English</option>
+              <option value="spanish">Spanish</option>
+              <option value="french">French</option>
+              <option value="german">German</option>
+            </select>
           </div>
           <div className="bg-slate px-3 overflow-y-auto flex-grow">
             {messageThread.length > 0 &&
@@ -165,9 +198,9 @@ export default function Page() {
                     <Image
                       style={{
                         filter: `hue-rotate(${
-                          message.self ? selfImgHue : ImgHue
+                          message.self ? selfImgHue : message.hue
                         }deg) saturate(${
-                          message.self == socket.id ? selfImgSat : ImgSat
+                          message.self == socket.id ? selfImgSat : message.sat
                         }%)`,
                       }}
                       src={"/images/geometric_1.jpg"}

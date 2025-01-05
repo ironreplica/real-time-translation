@@ -16,6 +16,7 @@ app.prepare().then(() => {
       methods: ["GET", "POST"],
     },
   });
+  // room count object
   const roomUserCount = {};
   io.on("connection", (socket) => {
     console.log("New connection:", socket.id);
