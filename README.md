@@ -59,21 +59,26 @@ Conclusion: Viable project with significant innovation potential!
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Clone Repository
 
-Say what the step will be
-
+Install Dependencies
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Aqquire an API key from Mistal.AI and place in your `.env` file.
+```:.env
+MISTRAL_API_KEY="YOUR KEY HERE"
+```
+
+Run
+```
+npm run dev
+```
+
+Open `http://localhost:3000/`
+
+Test socket creation and messaging features. Be aware of MistalAI's max API calls. 
 
 ### Console related tests
 
