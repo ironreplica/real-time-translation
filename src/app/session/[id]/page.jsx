@@ -39,12 +39,15 @@ export default function Page() {
 
   useEffect(() => {
     if (id) {
-      const newSocket = io(`http://localhost:3000`, {
-        path: "/socket.io",
-        transports: ["websocket"],
-        reconnectionAttempts: 5, // Number of reconnection attempts
-        reconnectionDelay: 1000, // Delay between reconnection attempts
-      });
+      const newSocket = io(
+        `https://real-time-translation-git-stable-branch-trevor-childs-projects.vercel.app`,
+        {
+          path: "/socket.io",
+          transports: ["websocket"],
+          reconnectionAttempts: 5, // Number of reconnection attempts
+          reconnectionDelay: 1000, // Delay between reconnection attempts
+        }
+      );
       setSocket(newSocket);
 
       newSocket.on("connect", () => {
@@ -140,7 +143,7 @@ export default function Page() {
   // };
 
   return (
-    <div className="flex flex-col h-screen font-[family-name:var(--font-geist-sans)] bg-[#1d2b41]">
+    <div className="flex flex-col h-screen font-[family-name:var(--font-geist-sans)] bg-[#1d2b41] text-white">
       <div className="flex w-full h-full">
         <div className="bg-[#101c29] w-1/5 grid grid-cols-[20%_80%]">
           <div className="bg-[#101c29] flex flex-col items-center">

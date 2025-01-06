@@ -209,7 +209,7 @@ export default function Home() {
         </div>
       )}
 
-      <div className="text-lg w-[60%] pb-[80px] pt-[300px] text-center font-thin">
+      <div className="text-lg w-[60%] pb-[80px] pt-[300px] text-center font-thin text-white">
         <h1>
           Combined with <strong>seamless</strong> AI translation and
           near-instant message sending, you can communicate with anyone
