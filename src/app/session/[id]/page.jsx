@@ -195,10 +195,12 @@ export default function Page() {
               value={myLanguage}
               onChange={(e) => setMyLanguage(e.target.value)}
             >
-              <option value="english">English</option>
-              <option value="spanish">Spanish</option>
-              <option value="french">French</option>
-              <option value="german">German</option>
+              <option value="English">English</option>
+              <option value="Español">Español</option>
+              <option value="Français">Français</option>
+              <option value="Deutsch">Deutsch</option>
+              <option value="中文">中文</option>
+              <option value="日本語">日本語</option>
             </select>
           </div>
           <div

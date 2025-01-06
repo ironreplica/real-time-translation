@@ -5,18 +5,19 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
-interface NavLink {
-  title: string;
-  link: string;
-}
-const NavLinks: NavLink[] = [
-  { title: "Language Bridge", link: "#" },
+// interface NavLink {
+//   title: string;
+//   link: string;
+// }
+// const NavLinks: NavLink[] = [
+//   { title: "Language Bridge", link: "#" },
 
-  {
-    title: "GitHub",
-    link: "https://github.com/ironreplica/real-time-translation",
-  },
-];
+//   {
+//     title: "GitHub",
+//     link: "https://github.com/ironreplica/real-time-translation",
+//   },
+// ];
+
 const languages = [
   "English",
   "Español",

@@ -37,7 +37,9 @@
     "src/app/components/HoverableMessage.jsx",
     "src/app/api/private-session/create/route.ts",
     "src/app/session/[id]/page.jsx",
-    "src/app/components/SessionLeftWindow.jsx"
+    "src/app/components/SessionLeftWindow.jsx",
+    "src/app/page.tsx",
+    "src/app/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
