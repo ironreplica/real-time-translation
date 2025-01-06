@@ -39,7 +39,7 @@ export default function Page() {
   useEffect(() => {
     if (id) {
       const newSocket = io(
-        `https://real-time-translation-production.up.railway.app`,
+        `https://language-bridge-bc59a7d725f8.herokuapp.com`,
         {
           path: "/socket.io",
           transports: ["websocket"],
