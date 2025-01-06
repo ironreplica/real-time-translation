@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
+import ReCAPTCHA from "react-google-recaptcha"; // Import ReCAPTCHA
 
 // interface NavLink {
 //   title: string;
@@ -11,7 +12,6 @@ import { useState, useRef, useEffect } from "react";
 // }
 const NavLinks = [
   { title: "Language Bridge", link: "#" },
-
   {
     title: "GitHub",
     link: "https://github.com/ironreplica/real-time-translation",
@@ -26,11 +26,14 @@ const languages = [
   "中文",
   "日本語",
 ];
+
 export default function Home() {
   const router = useRouter();
   const [hovering, setIsHovering] = useState(false);
   const [buttonPosition, setButtonPosition] = useState({ x: 0, y: 0 });
   const buttonRef = useRef(null); // Reference to the button element
+  const [isCaptchaModalOpen, setIsCaptchaModalOpen] = useState(false); // Track if reCAPTCHA modal is open
+  const [captchaPassed, setCaptchaPassed] = useState(false); // Track if CAPTCHA is passed
 
   // Update the button position when the component mounts
   useEffect(() => {
@@ -42,6 +45,7 @@ export default function Home() {
       });
     }
   }, []);
+
   const [currentLanguageIndex, setCurrentLanguageIndex] = useState(0);
 
   // Update language every 2 seconds
@@ -54,6 +58,7 @@ export default function Home() {
 
     return () => clearInterval(interval); // Clear interval on component unmount
   }, []);
+
   const variants = {
     initial: {
       background: `radial-gradient(circle at ${buttonPosition.x}px ${buttonPosition.y}px, rgba(0, 0, 20, 0.9) 0%, rgba(0, 0, 10, 0.5) 100%)`, // Initial gradient centered on the button
@@ -64,6 +69,36 @@ export default function Home() {
     hover: {
       background: `radial-gradient(circle at ${buttonPosition.x}px ${buttonPosition.y}px, rgba(0, 0, 30, 1) 0%, rgba(0, 0, 10, 1) 100%)`, // Hover state with gradient centered on the button
     },
+  };
+
+  const handleCaptchaChange = (value) => {
+    if (value) {
+      setCaptchaPassed(true); // Set captcha as passed
+    }
+  };
+
+  const handleCreateSession = async () => {
+    if (!captchaPassed) {
+      alert("Please complete the CAPTCHA challenge.");
+      return;
+    }
+
+    // Proceed to create session
+    try {
+      const response = await fetch("/api/private-session/create", {
+        method: "POST",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const sessionId = data.sessionId;
+      router.push(`/session/room-${sessionId}`);
+    } catch (error) {
+      console.error("Failed to create session:", error);
+    }
+
+    setIsCaptchaModalOpen(false); // Close the CAPTCHA modal after creating the session
   };
 
   return (
@@ -141,22 +176,7 @@ export default function Home() {
               "linear-gradient(135deg, rgba(0, 0, 120, 0.9) 0%, rgba(0, 0, 120, 0.8) 100%)", // Slightly brighter gradient on hover
           }}
           transition={{ duration: 0.3 }} // Faster transition for hover effects
-          onClick={async (e) => {
-            e.preventDefault();
-            try {
-              const response = await fetch("/api/private-session/create", {
-                method: "POST",
-              });
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              const data = await response.json();
-              const sessionId = data.sessionId;
-              router.push(`/session/room-${sessionId}`);
-            } catch (error) {
-              console.error("Failed to create session:", error);
-            }
-          }}
+          onClick={() => setIsCaptchaModalOpen(true)} // Open CAPTCHA modal on button click
           className="mx-auto flex items-center justify-center mb-4 border border-gray-600 rounded-md p-2 shadow-md"
         >
           <h1 className="text-white font-semibold text-xl p-3">
@@ -165,21 +185,30 @@ export default function Home() {
           {/* Light white text with slight emphasis */}
         </motion.button>
       </div>
-      <div
-        style={{
-          width: "1200px",
-          height: "auto",
-        }}
-      >
-        {/* <Image
-          src="/bridge.svg"
-          width={100}
-          height={100}
-          alt="bridge"
-          className="mx-auto"
-          style={{ filter: "invert(1)" }}
-        /> */}
-      </div>
+
+      {/* ReCAPTCHA Modal */}
+      {isCaptchaModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-[400px]">
+            <h2 className="text-center text-xl mb-4 text-black">
+              Please verify you're not a robot
+            </h2>
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+              onChange={handleCaptchaChange}
+            />
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={handleCreateSession}
+                className="bg-blue-500 text-white p-2 rounded-md"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="text-lg w-[60%] pb-[80px] pt-[300px] text-center font-thin">
         <h1>
           Combined with <strong>seamless</strong> AI translation and

@@ -17,22 +17,12 @@ app.prepare().then(() => {
     },
   });
 
-  // room count object
-  const roomUserCount = {};
   io.on("connection", (socket) => {
     console.log("New connection:", socket.id);
 
     socket.on("join", (roomId) => {
-      if (!roomUserCount[roomId]) {
-        roomUserCount[roomId] = 0;
-      }
-      if (roomUserCount[roomId] < 2) {
-        socket.join(`room-${roomId}`);
-        roomUserCount[roomId]++;
-        console.log(`Socket ${socket.id} joined room ${roomId}`);
-      } else {
-        socket.emit("room-full", roomId);
-      }
+      socket.join(`room-${roomId}`);
+      console.log(`Socket ${socket.id} joined room ${roomId}`);
     });
 
     socket.on("message", (msg) => {
@@ -40,16 +30,12 @@ app.prepare().then(() => {
       io.to(`room-${parsedMsg.roomId}`).emit("message", msg);
     });
 
-    socket.on("disconnect", () => {
-      console.log("Socket disconnected:", socket.id);
-      // Decreasing user count
-      for (const roomId in roomUserCount) {
-        if (socket.rooms.has(`room-${roomId}`)) {
-          roomUserCount[roomId]--;
-          console.log(`Room ${roomId} has ${roomUserCount[roomId]} users`);
-          break;
-        }
-      }
+    socket.on("disconnect", (reason) => {
+      console.log("Socket disconnected:", socket.id, "Reason:", reason);
+    });
+
+    socket.on("error", (error) => {
+      console.error("Socket error:", error);
     });
   });
 

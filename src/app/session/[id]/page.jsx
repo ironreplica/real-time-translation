@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import SessionLeftWindow from "@/app/components/SessionLeftWindow";
 import InfoLeftWindow from "@/app/components/InfoLeftWindow";
 import { useParams } from "next/navigation";
-import ReCAPTCHA from "react-google-recaptcha"; // Import the ReCAPTCHA component
+// import ReCAPTCHA from "react-google-recaptcha"; // Import the ReCAPTCHA component
 
 const leftButtonStyle =
   "w-[80px] h-[80px] mx-auto flex items-center justify-center transition-all duration-200";
@@ -17,15 +17,16 @@ const leftButtonStyleSelected =
 export default function Page() {
   const params = useParams();
   const [messageInput, setMessageInput] = useState("");
-  const [myLanguage, setMyLanguage] = useState("english");
+  const [myLanguage, setMyLanguage] = useState("English");
+  const myLanguageRef = useRef(myLanguage); // Use a ref to keep track of the current value of myLanguage
   const [messageThread, setMessageThread] = useState([]);
   const [id, setId] = useState(null);
   const [socket, setSocket] = useState(null);
   const [activeWindow, setActiveWindow] = useState("sessions");
   const [selfImgHue, setSelfImgHue] = useState(0);
   const [selfImgSat, setSelfImgSat] = useState(0);
-  const [captchaPassed, setCaptchaPassed] = useState(false); // Track if CAPTCHA is passed
-  const recaptchaRef = useRef(); // Reference to the reCAPTCHA
+  // const [captchaPassed, setCaptchaPassed] = useState(false); // Track if CAPTCHA is passed
+  // const recaptchaRef = useRef(); // Reference to the reCAPTCHA
 
   useEffect(() => {
     setId(params.id);
@@ -41,6 +42,8 @@ export default function Page() {
       const newSocket = io(`http://localhost:3000`, {
         path: "/socket.io",
         transports: ["websocket"],
+        reconnectionAttempts: 5, // Number of reconnection attempts
+        reconnectionDelay: 1000, // Delay between reconnection attempts
       });
       setSocket(newSocket);
 
@@ -49,8 +52,12 @@ export default function Page() {
         newSocket.emit("join", id);
       });
 
-      newSocket.on("disconnect", () => {
-        console.log("Socket disconnected");
+      newSocket.on("disconnect", (reason) => {
+        console.log("Socket disconnected:", reason);
+        if (reason === "io server disconnect") {
+          // The disconnection was initiated by the server, reconnect manually
+          newSocket.connect();
+        }
       });
 
       newSocket.on("message", async (data) => {
@@ -58,8 +65,9 @@ export default function Page() {
         if (newData.socketId !== newSocket.id) {
           newData.self = false;
 
+          console.log(myLanguageRef.current, newData.messageLanguage);
           let translation;
-          if (newData.messageLanguage !== myLanguage) {
+          if (newData.messageLanguage !== myLanguageRef.current) {
             try {
               const response = await fetch("/api/ai", {
                 method: "POST",
@@ -68,7 +76,7 @@ export default function Page() {
                 },
                 body: JSON.stringify({
                   userMessage: newData.message,
-                  language: myLanguage,
+                  language: myLanguageRef.current,
                 }),
               });
               const result = await response.json();
@@ -89,14 +97,24 @@ export default function Page() {
         console.log("Socket disconnected");
       };
     }
-  }, [id, myLanguage]);
+  }, [id]);
+
+  useEffect(() => {
+    // Update the ref whenever myLanguage changes
+    myLanguageRef.current = myLanguage;
+  }, [myLanguage]);
+
+  // useEffect(() => {
+  //   // Handle language change without affecting the socket connection
+  //   if (socket) {
+  //     socket.emit("language-change", myLanguage);
+  //     console.log(myLanguage);
+  //   }
+  // }, [myLanguage, socket]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (!captchaPassed) {
-      alert("Please complete the CAPTCHA challenge before sending a message.");
-      return;
-    }
+
     if (socket != null) {
       const data = {
         message: messageInput,
@@ -115,11 +133,11 @@ export default function Page() {
     }
   };
 
-  const handleCaptchaChange = (value) => {
-    if (value) {
-      setCaptchaPassed(true); // Set captcha as passed when user completes the challenge
-    }
-  };
+  // const handleCaptchaChange = (value) => {
+  //   if (value) {
+  //     setCaptchaPassed(true); // Set captcha as passed when user completes the challenge
+  //   }
+  // };
 
   return (
     <div className="flex flex-col h-screen font-[family-name:var(--font-geist-sans)] bg-[#1d2b41]">
@@ -270,14 +288,6 @@ export default function Page() {
             >
               Send
             </button>
-          </div>
-          {/* Add reCAPTCHA widget */}
-          <div className="mt-4">
-            <ReCAPTCHA
-              sitekey={process.env.RECAPTCHA_SITE_KEY}
-              onChange={handleCaptchaChange}
-              ref={recaptchaRef}
-            />
           </div>
         </div>
       </div>
