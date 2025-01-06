@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import HoverableMesssage from "@/components/HoverableMessage";
+import HoverableMesssage from "../../components/HoverableMessage"; // Correct import path
 import Image from "next/image";
 import { io } from "socket.io-client";
 import { useEffect, useState, useRef } from "react";
-import SessionLeftWindow from "@/components/SessionLeftWindow";
-import InfoLeftWindow from "@/components/InfoLeftWindow";
+import SessionLeftWindow from "../../components/SessionLeftWindow"; // Correct import path
+import InfoLeftWindow from "../../components/InfoLeftWindow"; // Correct import path
 import { useParams } from "next/navigation";
 // import ReCAPTCHA from "react-google-recaptcha"; // Import the ReCAPTCHA component
 
