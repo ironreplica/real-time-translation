@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import HoverableMesssage from "../../components/HoverableMessage";
+import HoverableMesssage from "@/components/HoverableMessage";
 import Image from "next/image";
 import { io } from "socket.io-client";
 import { useEffect, useState, useRef } from "react";
-import SessionLeftWindow from "../../components/SessionLeftWindow"; // Correct import path
-import InfoLeftWindow from "../../components/InfoLeftWindow"; // Correct import path
+import SessionLeftWindow from "@/components/SessionLeftWindow";
+import InfoLeftWindow from "@/components/InfoLeftWindow";
 import { useParams } from "next/navigation";
 // import ReCAPTCHA from "react-google-recaptcha"; // Import the ReCAPTCHA component
 
@@ -39,15 +39,12 @@ export default function Page() {
 
   useEffect(() => {
     if (id) {
-      const newSocket = io(
-        `wss://real-time-translation-git-stable-branch-trevor-childs-projects.vercel.app`,
-        {
-          path: "/socket.io",
-          transports: ["websocket"],
-          reconnectionAttempts: 5, // Number of reconnection attempts
-          reconnectionDelay: 1000, // Delay between reconnection attempts
-        }
-      );
+      const newSocket = io(`https://real-time-translation-nfgf.onrender.com`, {
+        path: "/socket.io",
+        transports: ["websocket"],
+        reconnectionAttempts: 5, // Number of reconnection attempts
+        reconnectionDelay: 1000, // Delay between reconnection attempts
+      });
       setSocket(newSocket);
 
       newSocket.on("connect", () => {
