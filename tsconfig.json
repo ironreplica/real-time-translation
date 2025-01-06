@@ -18,27 +18,11 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".src", // Ensure baseUrl is set
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"] // Ensure this points to valid directories
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/app/api/auth/session.js",
-    "src/app/api/auth/session/route.js",
-
-    "src/app/components/NavBar.js",
-    "src/app/components/NavBar.jsx",
-
-    "src/app/components/HoverableMessage.jsx",
-    "src/app/api/private-session/create/route.ts",
-    "src/app/session/[id]/page.jsx",
-    "src/app/components/SessionLeftWindow.jsx",
-    "src/app/page.tsx",
-    "src/app/page.jsx"
-  ],
+  "include": ["src/**/*", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
