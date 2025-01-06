@@ -2,8 +2,8 @@ import React from "react";
 
 const InfoLeftWindow = () => {
   return (
-    <div className="bg-slate-800 text-lg text-center">
-      <div className="text-xl p-4 border border-b-2 border-l-0 border-t-0 border-r-0 w-fit mx-auto border-gray-600 mb-3">
+    <div className="bg-slate-800 text-lg text-center text-white">
+      <div className="text-xl p-4 border border-b-2 border-l-0 border-t-0 border-r-0 w-fit mx-auto border-gray-600 mb-3 ">
         <h1>Info</h1>
       </div>
       <div className="my-3">
