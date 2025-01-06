@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import NavLink from "./NavLink";
 import Link from "next/link";
 
-import { useAuthContext } from "../api/firebase/context/authContext";
+// import { useAuthContext } from "../api/firebase/context/authContext";
 
 // TODO: Convert to typescript
 
