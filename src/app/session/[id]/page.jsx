@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import SessionLeftWindow from "../../components/SessionLeftWindow"; // Correct import path
 import InfoLeftWindow from "../../components/InfoLeftWindow"; // Correct import path
 import { useParams } from "next/navigation";
-// import ReCAPTCHA from "react-google-recaptcha"; // Import the ReCAPTCHA component
+// ...existing code...
 
 const leftButtonStyle =
   "w-[80px] h-[80px] mx-auto flex items-center justify-center transition-all duration-200";
@@ -25,8 +25,7 @@ export default function Page() {
   const [activeWindow, setActiveWindow] = useState("sessions");
   const [selfImgHue, setSelfImgHue] = useState(0);
   const [selfImgSat, setSelfImgSat] = useState(0);
-  // const [captchaPassed, setCaptchaPassed] = useState(false); // Track if CAPTCHA is passed
-  // const recaptchaRef = useRef(); // Reference to the reCAPTCHA
+  // ...existing code...
 
   useEffect(() => {
     setId(params.id);
@@ -107,14 +106,6 @@ export default function Page() {
     myLanguageRef.current = myLanguage;
   }, [myLanguage]);
 
-  // useEffect(() => {
-  //   // Handle language change without affecting the socket connection
-  //   if (socket) {
-  //     socket.emit("language-change", myLanguage);
-  //     console.log(myLanguage);
-  //   }
-  // }, [myLanguage, socket]);
-
   const handleSendMessage = (e) => {
     e.preventDefault();
 
@@ -135,12 +126,6 @@ export default function Page() {
       setMessageInput(""); // Clear input after sending
     }
   };
-
-  // const handleCaptchaChange = (value) => {
-  //   if (value) {
-  //     setCaptchaPassed(true); // Set captcha as passed when user completes the challenge
-  //   }
-  // };
 
   return (
     <div className="flex flex-col h-screen font-[family-name:var(--font-geist-sans)] bg-[#1d2b41] text-white">

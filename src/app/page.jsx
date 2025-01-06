@@ -61,10 +61,10 @@ export default function Home() {
 
   const variants = {
     initial: {
-      background: `radial-gradient(circle at ${buttonPosition.x}px ${buttonPosition.y}px, rgba(0, 0, 20, 0.9) 0%, rgba(0, 0, 10, 0.5) 100%)`, // Initial gradient centered on the button
+      background: `radial-gradient(circle at ${buttonPosition.x}px ${buttonPosition.y}px, rgba(0, 0, 40, 0.9) 0%, rgba(0, 0, 10, 0.5) 100%)`, // Initial gradient centered on the button
     },
     animate: {
-      background: `radial-gradient(circle at ${buttonPosition.x}px ${buttonPosition.y}px, rgba(0, 0, 40, 0.9) 50%, rgba(0, 0, 20, .3) 100%)`, // Animated gradient centered on the button
+      background: `radial-gradient(circle at ${buttonPosition.x}px ${buttonPosition.y}px, rgba(0, 0, 60, 0.9) 50%, rgba(0, 0, 20, .3) 100%)`, // Animated gradient centered on the button
     },
     hover: {
       background: `radial-gradient(circle at ${buttonPosition.x}px ${buttonPosition.y}px, rgba(0, 0, 30, 1) 0%, rgba(0, 0, 10, 1) 100%)`, // Hover state with gradient centered on the button
