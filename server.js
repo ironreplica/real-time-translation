@@ -1,18 +1,14 @@
 import { createServer } from "node:http";
 import next from "next";
 import { Server } from "socket.io";
-// import fs from "node:fs";
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = "localhost";
-const port = 3000;
+const hostname = dev ? "localhost" : "0.0.0.0"; // Use 0.0.0.0 for production
+const port = process.env.PORT || 3000; // Use environment variable for port
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
 
 app.prepare().then(() => {
-  // const httpsPotions = {
-  //   key: fs.readFileSync()
-  // }
   const httpServer = createServer(handler);
   const io = new Server(httpServer, {
     cors: {

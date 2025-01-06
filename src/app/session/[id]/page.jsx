@@ -40,7 +40,7 @@ export default function Page() {
   useEffect(() => {
     if (id) {
       const newSocket = io(
-        `https://real-time-translation-git-stable-branch-trevor-childs-projects.vercel.app`,
+        `wss://real-time-translation-git-stable-branch-trevor-childs-projects.vercel.app`,
         {
           path: "/socket.io",
           transports: ["websocket"],
