@@ -181,12 +181,12 @@ export default function Home() {
           regardless of language barriers. This app uses cutting-edge{" "}
           <strong>machine learning</strong> algorithms to translate text in
           real-time, providing you with accurate and context-aware translations.
-          Whether you're chatting with friends, collaborating with colleagues,
-          or engaging in cross-cultural discussions, the{" "}
+          Whether you&apos;re chatting with friends, collaborating with
+          colleagues, or engaging in cross-cultural discussions, the{" "}
           <strong>intuitive</strong> interface ensures that the conversation
           flows naturally without interruption. With{" "}
           <strong>advanced AI-powered features</strong> that adapt to your
-          unique communication style, you'll enjoy a smoother and more
+          unique communication style, you&apos;ll enjoy a smoother and more
           meaningful interaction, bridging linguistic gaps effortlessly.
         </h1>
       </div>
