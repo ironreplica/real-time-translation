@@ -9,14 +9,14 @@ import { useState, useRef, useEffect } from "react";
 //   title: string;
 //   link: string;
 // }
-// const NavLinks: NavLink[] = [
-//   { title: "Language Bridge", link: "#" },
+const NavLinks = [
+  { title: "Language Bridge", link: "#" },
 
-//   {
-//     title: "GitHub",
-//     link: "https://github.com/ironreplica/real-time-translation",
-//   },
-// ];
+  {
+    title: "GitHub",
+    link: "https://github.com/ironreplica/real-time-translation",
+  },
+];
 
 const languages = [
   "English",
