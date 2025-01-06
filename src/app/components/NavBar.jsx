@@ -68,47 +68,46 @@ const NavBar = () => {
   // const { user } = useAuthContext();
   // if (user) {
   // }
-  return (
-    <div className="w-full h-[80px] bg-gray-950 flex flex-row border-b-[2px] border-gray-900">
-      <div className="grid grid-cols-2 w-full mx-[300px]">
-        <div className="flex flex-row">
-          {leftLinks.map((element, index) =>
-            index === 0 ? (
-              <div
-                key={index}
-                className="font-bold text-2xl my-auto px-4 hover:text-violet-400 transition-all duration-200"
-              >
-                <Link href={element.link}>
-                  <h1>{element.title}</h1>
-                </Link>
-              </div>
-            ) : (
-              <NavLink key={index} title={element.title} link={element.link} />
-            )
-          )}
-        </div>
-        <div className="flex flex-row-reverse">
-          {user
-            ? rightLinksLoggedIn.map((element, index) => (
-                <NavLink
-                  key={index}
-                  title={
-                    element.title === "username" ? user.name : element.title
-                  }
-                  link={element.link}
-                />
-              ))
-            : rightLinks.map((element, index) => (
-                <NavLink
-                  key={index}
-                  title={element.title}
-                  link={element.link}
-                />
-              ))}
-        </div>
-      </div>
-    </div>
-  );
+  return <div></div>;
+  // <div className="w-full h-[80px] bg-gray-950 flex flex-row border-b-[2px] border-gray-900">
+  //   <div className="grid grid-cols-2 w-full mx-[300px]">
+  //     <div className="flex flex-row">
+  //       {leftLinks.map((element, index) =>
+  //         index === 0 ? (
+  //           <div
+  //             key={index}
+  //             className="font-bold text-2xl my-auto px-4 hover:text-violet-400 transition-all duration-200"
+  //           >
+  //             <Link href={element.link}>
+  //               <h1>{element.title}</h1>
+  //             </Link>
+  //           </div>
+  //         ) : (
+  //           <NavLink key={index} title={element.title} link={element.link} />
+  //         )
+  //       )}
+  //     </div>
+  //     <div className="flex flex-row-reverse">
+  //       {user
+  //         ? rightLinksLoggedIn.map((element, index) => (
+  //             <NavLink
+  //               key={index}
+  //               title={
+  //                 element.title === "username" ? user.name : element.title
+  //               }
+  //               link={element.link}
+  //             />
+  //           ))
+  //         : rightLinks.map((element, index) => (
+  //             <NavLink
+  //               key={index}
+  //               title={element.title}
+  //               link={element.link}
+  //             />
+  //           ))}
+  //     </div>
+  //   </div>
+  // </div>
 };
 
 export default NavBar;

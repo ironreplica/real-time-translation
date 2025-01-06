@@ -27,7 +27,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/utils/get-user-session.js",
     "src/app/api/auth/session.js",
     "src/app/api/auth/session/route.js",
 
