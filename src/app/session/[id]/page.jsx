@@ -4,8 +4,8 @@ import HoverableMesssage from "../../components/HoverableMessage";
 import Image from "next/image";
 import { io } from "socket.io-client";
 import { useEffect, useState, useRef } from "react";
-import SessionLeftWindow from "@/app/components/SessionLeftWindow";
-import InfoLeftWindow from "@/app/components/InfoLeftWindow";
+import SessionLeftWindow from "../../components/SessionLeftWindow"; // Correct import path
+import InfoLeftWindow from "../../components/InfoLeftWindow"; // Correct import path
 import { useParams } from "next/navigation";
 // import ReCAPTCHA from "react-google-recaptcha"; // Import the ReCAPTCHA component
 
