@@ -141,15 +141,20 @@ export default function Home() {
           }}
           transition={{ duration: 0.3 }} // Faster transition for hover effects
           onClick={async (e) => {
-            // * Create a new session button
             e.preventDefault();
-            const response = await fetch("/api/private-session/create", {
-              method: "POST",
-            });
-            const data = await response.json();
-            const sessionId = data.sessionId;
-            // Navigate to the new session room
-            router.push(`/session/room-${sessionId}`);
+            try {
+              const response = await fetch("/api/private-session/create", {
+                method: "POST",
+              });
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              const data = await response.json();
+              const sessionId = data.sessionId;
+              router.push(`/session/room-${sessionId}`);
+            } catch (error) {
+              console.error("Failed to create session:", error);
+            }
           }}
           className="mx-auto flex items-center justify-center mb-4 border border-gray-600 rounded-md p-2 shadow-md"
         >

@@ -16,6 +16,7 @@ app.prepare().then(() => {
       methods: ["GET", "POST"],
     },
   });
+
   // room count object
   const roomUserCount = {};
   io.on("connection", (socket) => {
@@ -27,6 +28,7 @@ app.prepare().then(() => {
       }
       if (roomUserCount[roomId] < 2) {
         socket.join(`room-${roomId}`);
+        roomUserCount[roomId]++;
         console.log(`Socket ${socket.id} joined room ${roomId}`);
       } else {
         socket.emit("room-full", roomId);
@@ -42,9 +44,9 @@ app.prepare().then(() => {
       console.log("Socket disconnected:", socket.id);
       // Decreasing user count
       for (const roomId in roomUserCount) {
-        if (socket.rooms.has(roomId)) {
-          roomUserCount[room]--;
-          console.log(`Room ${room} has ${roomUserCount[room]} users`);
+        if (socket.rooms.has(`room-${roomId}`)) {
+          roomUserCount[roomId]--;
+          console.log(`Room ${roomId} has ${roomUserCount[roomId]} users`);
           break;
         }
       }
