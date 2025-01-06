@@ -18,7 +18,7 @@ export async function POST(req) {
       ],
     });
 
-    await chatResponse; // Ensure the response is awaited
+    await chatResponse; // Ensure the response is awaited.
 
     console.log(
       "Translated message: " + chatResponse.choices[0].message.content
