@@ -39,12 +39,15 @@ export default function Page() {
 
   useEffect(() => {
     if (id) {
-      const newSocket = io(`https://real-time-translation-nfgf.onrender.com`, {
-        path: "/socket.io",
-        transports: ["websocket"],
-        reconnectionAttempts: 5, // Number of reconnection attempts
-        reconnectionDelay: 1000, // Delay between reconnection attempts
-      });
+      const newSocket = io(
+        `https://real-time-translation-production.up.railway.app`,
+        {
+          path: "/socket.io",
+          transports: ["websocket"],
+          reconnectionAttempts: 5, // Number of reconnection attempts
+          reconnectionDelay: 1000, // Delay between reconnection attempts
+        }
+      );
       setSocket(newSocket);
 
       newSocket.on("connect", () => {
