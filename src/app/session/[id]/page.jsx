@@ -273,11 +273,11 @@ export default function Page() {
           </div>
           {/* Add reCAPTCHA widget */}
           <div className="mt-4">
-            {/* <ReCAPTCHA
+            <ReCAPTCHA
               sitekey={process.env.RECAPTCHA_SITE_KEY}
               onChange={handleCaptchaChange}
               ref={recaptchaRef}
-            /> */}
+            />
           </div>
         </div>
       </div>
