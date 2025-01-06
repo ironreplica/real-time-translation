@@ -36,7 +36,7 @@ const rightLinksLoggedIn = [
 // }
 
 const NavBar = () => {
-  const { user } = useAuthContext();
+  // const { user } = useAuthContext();
   // const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
   //   null
   // );
